@@ -52,7 +52,6 @@ class Hangman extends React.Component {
     if (!this.props.answer.includes(letter)) guessCount += 1;
 
     this.setState({ guessed: arr, mistake: guessCount });
-    console.log(this.state.mistake);
   };
 
   render() {
@@ -69,8 +68,13 @@ class Hangman extends React.Component {
         {this.state.mistake === 6 ? (
           <div>
             <img src={stage7} alt="stage7" />
+            <div className="answerBoard">
+              {this.props.answer.map(letter => (
+                <div className="answerLetter">{letter}</div>
+              ))}
+            </div>
             <div>YOU DED!</div>
-            <button>Replay?</button>
+            <button onClick={this.props.replay}>Replay?</button>
           </div>
         ) : (
           <div>
@@ -87,20 +91,29 @@ class Hangman extends React.Component {
                 </div>
               ))}
             </div>
-            <div className="letterBoard">
-              {this.state.letters.map(letter => (
-                <div key={letter} className="letterWrapper">
-                  {this.state.guessed.includes(letter) ? null : (
-                    <div
-                      onClick={() => this.addToGuessed(letter)}
-                      className="boardLetter"
-                    >
-                      {letter}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            {this.props.answer.every(letter =>
+              this.state.guessed.includes(letter)
+            ) ? (
+              <div>
+                <div>YOU WON!</div>
+                <button onClick={this.props.replay}>Replay?</button>
+              </div>
+            ) : (
+              <div className="letterBoard">
+                {this.state.letters.map(letter => (
+                  <div key={letter} className="letterWrapper">
+                    {this.state.guessed.includes(letter) ? null : (
+                      <div
+                        onClick={() => this.addToGuessed(letter)}
+                        className="boardLetter"
+                      >
+                        {letter}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -31,12 +31,16 @@ class App extends React.Component {
     }
   };
 
+  replayGame = () => {
+    this.setState({ currentWord: "", game: false });
+  };
+
   render() {
     return (
       <div className="App">
         <Header started={this.state.game} />
         {this.state.game ? (
-          <Hangman answer={this.state.currentWord} />
+          <Hangman answer={this.state.currentWord} replay={this.replayGame} />
         ) : (
           <Form changeWord={this.changeWord} startGame={this.startGame} />
         )}
