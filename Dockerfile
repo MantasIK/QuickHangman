@@ -1,19 +1,23 @@
+FROM node AS builder
 # Set the working directory
 WORKDIR /Hangman
-
-# Copy the file from your host to your current location
-COPY package.json .
-
-# Run the command inside your image filesystem
-RUN npm install
-
-# RUN sudo npm install -g serve
-# Inform Docker that the container is listening on the specified port at runtime.
-EXPOSE 5000
-
-# Run the specified command within the container.
-CMD [ "serve", "-s", "build" ]
-# CMD ["apt-get", "install", "nano"]
-
-# Copy the rest of your app's source code from your host to your image filesystem.
 COPY . .
+RUN npm install react-scripts -g --silent
+RUN npm install
+RUN npm run build
+
+FROM node
+RUN npm install -g serve
+WORKDIR /Hangman
+COPY --from=builder /Hangman/build .
+CMD ["serve", "-p", "80", "-s", "."]doc
+
+# COPY package.json .
+
+# RUN npm install
+# COPY . .
+# RUN npm run build
+
+# EXPOSE 3000
+
+# CMD ['server', '-s', 'build']
