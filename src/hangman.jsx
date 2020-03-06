@@ -7,6 +7,7 @@ import stage4 from "./hangmanPics/Stage4.png";
 import stage5 from "./hangmanPics/Stage5.png";
 import stage6 from "./hangmanPics/Stage6.png";
 import stage7 from "./hangmanPics/Stage7.png";
+import sound from "./BackgroundMusic.mp3";
 
 class Hangman extends React.Component {
   constructor(props) {
@@ -65,6 +66,9 @@ class Hangman extends React.Component {
 
     return (
       <div>
+        <div>
+          <audio src={sound} autoPlay className="music" />
+        </div>
         {this.state.mistake === 6 ? (
           <div>
             <img src={stage7} alt="stage7" />
