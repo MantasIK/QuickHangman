@@ -73,12 +73,22 @@ class Hangman extends React.Component {
                 <div className="answerLetter">{letter}</div>
               ))}
             </div>
-            <div>YOU DED!</div>
-            <button onClick={this.props.replay}>Replay?</button>
+            <div className="losing">YOU LOST!</div>
+            <button
+              onClick={this.props.replay}
+              className="againButton"
+              style={{
+                display: "block",
+                marginRight: "auto",
+                marginLeft: "auto"
+              }}
+            >
+              Play Again?
+            </button>
           </div>
         ) : (
           <div>
-            <img src={man} alt="stage1" />
+            <img src={man} alt="stage1" id="image" />
 
             <div className="answerBoard">
               {this.props.answer.map(letter => (
@@ -86,7 +96,7 @@ class Hangman extends React.Component {
                   {this.state.guessed.includes(letter) ? (
                     <div>{letter}</div>
                   ) : (
-                    <div>__</div>
+                    <div style={{ fontWeight: "bolder" }}>__</div>
                   )}
                 </div>
               ))}
@@ -94,9 +104,11 @@ class Hangman extends React.Component {
             {this.props.answer.every(letter =>
               this.state.guessed.includes(letter)
             ) ? (
-              <div>
+              <div className="winning">
                 <div>YOU WON!</div>
-                <button onClick={this.props.replay}>Replay?</button>
+                <button onClick={this.props.replay} className="againButton">
+                  Play Again?
+                </button>
               </div>
             ) : (
               <div className="letterBoard">

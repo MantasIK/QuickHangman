@@ -15,19 +15,23 @@ class App extends React.Component {
     };
   }
   changeWord = e => {
-    this.setState({ currentWord: e.target.value });
+    this.setState({
+      currentWord: e.target.value
+    });
   };
 
   startGame = () => {
+    let word = this.state.currentWord;
+    word = word.toUpperCase().split("");
     if (
-      this.state.currentWord.includes(" ") ||
-      this.state.currentWord.length === 0
+      word.some(letter =>
+        [" ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(letter)
+      ) ||
+      word.length === 0
     )
       this.setState({ warning: true });
     else {
-      let word = this.state.currentWord;
-      word = word.toUpperCase().split("");
-      this.setState({ currentWord: word, game: true });
+      this.setState({ currentWord: word, game: true, warning: false });
     }
   };
 
@@ -39,6 +43,18 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header started={this.state.game} />
+        {this.state.warning ? (
+          <div
+            style={{
+              fontSize: "170%",
+              color: "red",
+              fontFamily: "'Comic Sans MS'",
+              fontWeight: "bolder"
+            }}
+          >
+            No numbers or spaces buckaroo!
+          </div>
+        ) : null}
         {this.state.game ? (
           <Hangman answer={this.state.currentWord} replay={this.replayGame} />
         ) : (

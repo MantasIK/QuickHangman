@@ -4,7 +4,7 @@ import "./App.css";
 function Form({ changeWord, startGame }) {
   return (
     <div className="form">
-      <label>Type in your word: </label>
+      <label>What's the secret word? </label>
       <input
         type="text"
         className="form"
@@ -12,7 +12,7 @@ function Form({ changeWord, startGame }) {
         onChange={changeWord}
       ></input>
       <button onClick={startGame} className="formButton">
-        Get Hanging{" "}
+        Get Hanging!{" "}
       </button>
     </div>
   );
